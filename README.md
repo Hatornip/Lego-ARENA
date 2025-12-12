@@ -4,8 +4,8 @@
 
 	Le premier robot a un concept relativement simple, puisqu’au début, nous voulions tester assez rapidement les moteurs, les senseurs et comment leur envoyer des instructions. Ainsi, le premier robot est un robot attrapeur et est équipé d’une pince qui peut s’ouvrir et se refermer pour attraper et relâcher une balle. Il se déplace selon les instructions du serveur, et la pince se ferme lorsque le capteur ultrasonique placé juste au-dessus détecte un objet suffisamment proche. Cette dernière fonctionnalité est gérée sur le code local du robot, sans intervention du serveur.
 
-*Photo du 1er robot*
-![][image1]
+*Photo du 1er robot*  
+![](./images/image1.png)
 Pour se déplacer, le châssis du robot est monté sur des chenilles qui sont activées par deux moteurs, eux même contrôlés par une structure logique de tank dans le code du robot (cf. [Motor classes — python-ev3dev 2.1.0.post1 documentation](https://ev3dev-lang.readthedocs.io/projects/python-ev3dev/en/stable/motors.html#move-tank)). De plus, le robot est équipé d’un support au dessus de la brique EV3 pour poser la feuille de l’ArUco (cf. Vision et détection du robot). Ce support a des pins qui peuvent facilement se détacher pour maintenir la feuille en place.
 Enfin, la brique EV3 est amovible, puisqu’elle est maintenue par des bras dont elle peut facilement se détacher. Elle est aussi facilement accessible, puisque son port de charge situé vers l’arrière du robot est dégagé et que son interface et ses boutons sont directement accessibles depuis le haut du robot.
 
@@ -14,7 +14,7 @@ Enfin, la brique EV3 est amovible, puisqu’elle est maintenue par des bras dont
 ## 2ème Robot
 
 	L’objectif original du deuxième robot était de chercher à gêner activement les robots “adverses”. Notre approche a donc été de concevoir un robot avec une rampe. L’idée est que les autres robots montent sur la rampe, et que celle-ci pivote pour les faire basculer.
-![][image2]
+![](./images/image2.png)
 *2ème robot original avec rampe, rampe fermée et étendue*
 
 Le robot se déplace selon les instructions du serveur, et la rampe s’active lorsque le capteur de lumière placé dedans est couvert. Cette dernière fonctionnalité était gérée sur le code local du robot, sans intervention du serveur.
@@ -102,16 +102,16 @@ Chaque robot sur le réseau doit avoir une adresse IP et un port unique. Le scri
 
 Pour la partie vision de notre projet, nous avons choisi de développer un modèle de reconnaissance d’image basé sur l’apprentissage automatique. Nous avons d’abord recueilli plus de 100 images avec un outil que nous avons développé (voir script\_test/screenshot\_.py sur la forge), lequel permet de diviser en deux la “frame” de retour des caméras dès que la touche “q” est pressée. Cela nous donne ainsi, à chaque prise, deux photos correspondant chacune à l’un des deux angles de vue des caméras.
 
-![][image3]
+![](./images/image3.png)
 
-Ensuite, nous avons utilisé l’application LabelStudio pour annoter les données : sur chaque image, nous indiquons précisément la position des balles rouges et des balles bleues. Ces images annotées sont ensuite envoyées sur Google Colab, qui nous permet d’accéder gratuitement à un GPU afin d’entraîner notre modèle de détection.![][image4]Enfin, dans notre code exécuté sur le PC, nous utilisons l’algorithme de détection d’objets en temps réel YOLO (You Only Look Once). Ce modèle nous permet de détecter très précisément la position des balles dans l’arène à partir des flux vidéo récupérés, offrant ainsi aux robots les informations de localisation nécessaires pour accomplir leur tâche.
+Ensuite, nous avons utilisé l’application LabelStudio pour annoter les données : sur chaque image, nous indiquons précisément la position des balles rouges et des balles bleues. Ces images annotées sont ensuite envoyées sur Google Colab, qui nous permet d’accéder gratuitement à un GPU afin d’entraîner notre modèle de détection.![](./images/image4.png)Enfin, dans notre code exécuté sur le PC, nous utilisons l’algorithme de détection d’objets en temps réel YOLO (You Only Look Once). Ce modèle nous permet de détecter très précisément la position des balles dans l’arène à partir des flux vidéo récupérés, offrant ainsi aux robots les informations de localisation nécessaires pour accomplir leur tâche.
 
 ### Vision et détection des robots
 
 Pour différencier et localiser précisément chaque robot dans l’arène, nous avons placé un marqueur ArUco sur chacun d’eux, avec respectivement les identifiants 1 et 2\.
 Les marqueurs ArUco sont similaires aux QR codes, mais ils sont conçus spécifiquement pour la détection rapide et fiable par ordinateur : ils comportent une matrice binaire leur attribuant un identifiant unique, ce qui permet de distinguer plusieurs robots en même temps.
 
-![][image5]
+![](./images/image5.png)
 
 Grâce à la bibliothèque ArUco intégrée à OpenCV, le système détecte automatiquement la présence et l’identifiant de chaque marqueur sur les images issues des caméras.
 Cela nous donne la position et l’orientation précise de chaque robot dans l’arène.
